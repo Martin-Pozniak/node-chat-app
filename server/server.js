@@ -27,17 +27,41 @@ var io = socketIO(server);
 io.on('connection', (socket) => {
     console.log("New User Connected");
 
+    /*****************************************
+    * Greet the individual user on connection
+    *****************************************/
+    socket.emit('welcomeMessage', {
+        from:'Admin',
+        text: 'Welcome to the chat room'
+    });
+    /*****************************************
+    * Broadcast to chatroom that a new user has joined
+    *****************************************/
+    socket.broadcast.emit("newUserJoined", {
+        from:'Admin',
+        text:'New User Joined Chat Room',
+        createdAt: new Date().getTime()
+    });
+
+    /*****************************************
+    * Handle On Disconnect Event
+    *****************************************/
     socket.on('disconnect', () => {
         console.log("User disconnected");
     });
 
+    /*****************************************
+    * Handle the create message event from client
+    *****************************************/
     socket.on('createMessage', (newMessage) => {
         console.log("Creating New Message: ", newMessage);
+
         io.emit('newMessage', {
             from: newMessage.from,
             text: newMessage.text,
             createdAt: new Date().getTime()
         });
+
     });
     
 });
