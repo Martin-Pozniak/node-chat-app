@@ -11,6 +11,8 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
+
 /************************************
  * Globals
  ***********************************/
@@ -30,25 +32,12 @@ io.on('connection', (socket) => {
     /*****************************************
     * Greet the individual user on connection
     *****************************************/
-    socket.emit('welcomeMessage', {
-        from:'Admin',
-        text: 'Welcome to the chat room'
-    });
+    socket.emit('welcomeMessage', generateMessage('Admin','Welcome to the chat app!'));
+
     /*****************************************
     * Broadcast to chatroom that a new user has joined
     *****************************************/
-    socket.broadcast.emit("newUserJoined", {
-        from:'Admin',
-        text:'New User Joined Chat Room',
-        createdAt: new Date().getTime()
-    });
-
-    /*****************************************
-    * Handle On Disconnect Event
-    *****************************************/
-    socket.on('disconnect', () => {
-        console.log("User disconnected");
-    });
+    socket.broadcast.emit("newUserJoined", generateMessage('Admin',"New user joined!"));
 
     /*****************************************
     * Handle the create message event from client
@@ -56,12 +45,15 @@ io.on('connection', (socket) => {
     socket.on('createMessage', (newMessage) => {
         console.log("Creating New Message: ", newMessage);
 
-        io.emit('newMessage', {
-            from: newMessage.from,
-            text: newMessage.text,
-            createdAt: new Date().getTime()
-        });
+        io.emit('newMessage', generateMessage( newMessage.from, newMessage.text ));
+    
+    });
 
+    /*****************************************
+    * Handle On Disconnect Event
+    *****************************************/
+    socket.on('disconnect', () => {
+        console.log("User disconnected");
     });
     
 });
