@@ -32,23 +32,21 @@ io.on('connection', (socket) => {
     /*****************************************
     * Greet the individual user on connection
     *****************************************/
-    socket.emit('welcomeMessage', generateMessage('Admin','Welcome to the chat app!'));
+    socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app!'));
 
     /*****************************************
     * Broadcast to chatroom that a new user has joined
     *****************************************/
-    socket.broadcast.emit("newUserJoined", generateMessage('Admin',"New user joined!"));
+    socket.broadcast.emit("newMessage", generateMessage('Admin',"New user joined!"));
 
     /*****************************************
     * Handle the create message event from client
     *****************************************/
-    socket.on('createMessage', (newMessage) => {
+    socket.on('createMessage', (newMessage,callback) => {
         console.log("Creating New Message: ", newMessage);
-
         io.emit('newMessage', generateMessage( newMessage.from, newMessage.text ));
-    
+        callback();
     });
-
     /*****************************************
     * Handle On Disconnect Event
     *****************************************/

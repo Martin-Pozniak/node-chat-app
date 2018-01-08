@@ -8,28 +8,45 @@ var socket = io();
 *****************************************/
 socket.on('connect',function() {
     console.log("connected to server");
+    
 });
+
+/*****************************************
+* Event Acknowledgements
+*****************************************/
+// socket.emit('createMessage', {
+//     from: 'Frank',
+//     text: 'Hi'
+// }, function() {
+//     console.log("Got Ack!");
+// });
+
 /*****************************************
 * Handle the disconnect event
 *****************************************/
 socket.on('disconnect',function() {
     console.log("Disconnected from server")
 });
+
 /*****************************************
 * handle the new message event
 *****************************************/
 socket.on('newMessage', function(message) {
     console.log("Received New Message: ",message);
+    var li = $('<li></li>');
+    li.text(`${message.from}: ${message.text}`);
+    $('#messages').append(li);
 });
+
 /*****************************************
-* Handle the new user joined event
+* handle the message submit button event
 *****************************************/
-socket.on('newUserJoined',function() {
-    console.log("New User Joined The Chat Room");
-});
-/*****************************************
-* Handle the welcome message event
-*****************************************/
-socket.on('welcomeMessage', (message) => {
-    console.log(message.text + ' @ '+ message.createdAt);
+$('#message-form').on('submit', function(e) {
+    e.preventDefault();
+    socket.emit('createMessage', {
+        from: 'User',
+        text: $('[name=message]').val()
+    }, function() {
+
+    });
 });
