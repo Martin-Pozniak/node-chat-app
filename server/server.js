@@ -12,7 +12,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 
 const {generateMessage} = require('./utils/message');
-
+const {generateLocationMessage} = require('./utils/message');
 /************************************
  * Globals
  ***********************************/
@@ -46,6 +46,13 @@ io.on('connection', (socket) => {
         console.log("Creating New Message: ", newMessage);
         io.emit('newMessage', generateMessage( newMessage.from, newMessage.text ));
         callback();
+    });
+
+    /*****************************************
+    * Handle the create message event from client
+    *****************************************/
+    socket.on('createLocationMessage',(coords) => {
+        io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude, coords.longitude))
     });
     /*****************************************
     * Handle On Disconnect Event
