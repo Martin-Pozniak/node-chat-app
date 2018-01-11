@@ -7,7 +7,7 @@
     </head>
     <body>
         <div id='people-container' class='left-bar'>
-            <h2 class='white bold underlined'>PEOPLE</h2>
+            <h1 class='white bold left-aligned margin-top margin-left'>PEOPLE</h1>
             <div id="Users"></div>
         </div>
         <div id="chat-main">
@@ -26,19 +26,23 @@
         </div>
 
         <script id="message-template" type="text/template">
-            <p><strong>{{from}}</strong> <span class='timestamp'>{{timestamp}}</span></p>
-            <p>{{text}}</p>
+            <li>
+                <p><strong>{{from}}</strong> <span class='timestamp'>{{timestamp}}</span></p>
+                <p>{{text}}</p>
+            </li>
         </script>
 
         <script id="location-message-template" type="text/template">
-            <p><strong>{{from}}</strong> <span class='timestamp'>{{timestamp}}</span></p>
-            <p><a href="{{url}}" target="_blank">My Current Location</a></p>
+            <li>
+                <p><strong>{{from}}</strong> <span class='timestamp'>{{timestamp}}</span></p>
+                <p><a href="{{url}}" target="_blank">My Current Location</a></p>
+            </li>
         </script>
 
         <script src="/js/libs/moment/moment.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/libs/jquery-3.2.1.min.js"></script>
-        <script src="/js/index.js"></script>       
+        <script src="/js/libs/jquery-3.2.1.min.js"></script>     
         <script src="/js/libs/mustache.js"></script>
+        <script src="/js/index.js"></script>  
     </body>
 </html>

@@ -4,6 +4,27 @@
 var socket = io();
 
 /*****************************************
+* AutoScrolling function
+*****************************************/
+function scrollToBottom() {
+    //selectors
+    var messages = $('#messages-container');
+    var newMessage = $('#messages').children('li:last-child');
+    //heights
+    var clientHeight = messages.prop('clientHeight');
+    var scrollTop = messages.prop('scrollTop'); 
+    var scrollHeight = messages.prop('scrollHeight'); 
+    var newMessageHeight = newMessage.innerHeight();
+
+    console.log((clientHeight + scrollTop + newMessageHeight )+" vs "+scrollHeight)
+    if ((clientHeight + scrollTop + newMessageHeight +10) >= scrollHeight)
+    {
+        console.log("should scroll")
+        messages.scrollTop(scrollHeight);
+    }
+};
+
+/*****************************************
 * Handle the connect event
 *****************************************/
 socket.on('connect',function() {
@@ -40,7 +61,6 @@ socket.on('newMessage', function(message) {
     // li.text(`${message.from}: ${message.text}`);
     // $('#messages').append(li);
     // $('#messages').append(timestamp); 
-
     var template = $('#message-template').html();
     var html = Mustache.render(template, {
         text:message.text,
@@ -48,6 +68,9 @@ socket.on('newMessage', function(message) {
         timestamp:formattedTime
     });
     $('#messages').append(html);
+
+    scrollToBottom();
+
 });
 
 /*****************************************
