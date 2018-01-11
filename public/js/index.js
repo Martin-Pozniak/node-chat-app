@@ -32,28 +32,47 @@ socket.on('disconnect',function() {
 * handle the new message event
 *****************************************/
 socket.on('newMessage', function(message) {
-    var formattedTime = moment(message.createdAt);
-    console.log("Received New Message: ",message);
-    var li = $('<li></li>');
-    var timestamp=$(`<span class='timestamp'>${formattedTime.format('h:m:s a')}</span>`)
-    li.text(`${message.from}: ${message.text}`);
-    $('#messages').append(li);
-    $('#messages').append(timestamp); 
+    var formattedTime = moment(message.createdAt).format('h:m:s a');
+
+    // console.log("Received New Message: ",message);
+    // var li = $('<li></li>');
+    // var timestamp=$(`<span class='timestamp'>${formattedTime.format('h:m:s a')}</span>`)
+    // li.text(`${message.from}: ${message.text}`);
+    // $('#messages').append(li);
+    // $('#messages').append(timestamp); 
+
+    var template = $('#message-template').html();
+    var html = Mustache.render(template, {
+        text:message.text,
+        from:message.from,
+        timestamp:formattedTime
+    });
+    $('#messages').append(html);
 });
 
 /*****************************************
 * handle the new location message event
 *****************************************/
 socket.on('newLocationMessage', function(message) {
-    var formattedTime = moment(message.createdAt);    
-    var li = $('<li></li>');
-    var timestamp=$(`<span class='timestamp'>${formattedTime.format('h:m:s a')}</span>`)    
-    var a = $('<a target="_blank">My Current Location</a>');
-    li.text(`${message.from}: `);
-    a.attr('href',message.url);
-    li.append(a);
-    $('#messages').append(li);  
-    $('#messages').append(timestamp);   
+    var formattedTime = moment(message.createdAt).format('h:m:s a');    
+    // var li = $('<li></li>');
+    // var timestamp=$(`<span class='timestamp'>${formattedTime.format('h:m:s a')}</span>`)    
+    // var a = $('<a target="_blank">My Current Location</a>');
+    // li.text(`${message.from}: `);
+    // a.attr('href',message.url);
+    // li.append(a);
+    // $('#messages').append(li);  
+    // $('#messages').append(timestamp);   
+
+    var template = $('#location-message-template').html();
+    var html = Mustache.render(template, {
+        text:message.text,
+        from:message.from,
+        timestamp:formattedTime,
+        url:message.url
+    });
+    $('#messages').append(html);
+
 });
 
 /*****************************************
