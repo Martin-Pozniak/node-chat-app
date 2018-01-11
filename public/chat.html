@@ -9,14 +9,17 @@
     </head>
     <body>
         <div id='people-container' class='left-bar'>
-            <h1 class='white bold left-aligned margin-top margin-left'>PEOPLE</h1>
-            <div id="Users"></div>
+            <h1 class="grey bold left-aligned margin-top margin-left" id="room-name"><!--Is Dynamically Populated--></h1>
+            <h3 class='white bold left-aligned margin-top margin-left'>PEOPLE</h3>
+            <div id="users"><!--Is Dynamically Populated--></div>
         </div>
         <div id="chat-main">
             <div id="messages-container">
-                <ol id="messages">
-                    
-                </ol>
+                <div class="inner">
+                    <ol id="messages">
+                        
+                    </ol>
+                </div>
             </div>
             <div id="message-form-container">
                 <form id="message-form">            
@@ -45,6 +48,7 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/libs/jquery-3.2.1.min.js"></script>     
         <script src="/js/libs/mustache.js"></script>
-        <script src="/js/chat.js"></script>  
+        <script src="/js/chat.js"></script> 
+        <script src="/js/libs/deparam.js"></script> 
     </body>
 </html>

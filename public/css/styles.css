@@ -18,6 +18,7 @@ button{
 }
 ol{
     list-style-type: none;
+    z-index: 9999;
 }
 p{
     margin-top:10px;
@@ -38,6 +39,13 @@ div.centered-form input {
 .background {
     background:linear-gradient(rgb(0, 67, 143),rgb(34, 34, 34));
 }
+#users li {
+    background:pink;
+    padding:5px;
+    font-size:18px;
+    color:white;
+    margin-top:5px;
+}
 .inner
 {
     padding:20px;
@@ -54,6 +62,7 @@ div.centered-form input {
     border-radius:3px;
     box-shadow:0 0 10px black;
     min-width:200px;
+    min-height:300px;
 }
 .margin-top{
     margin-top: 10px;
@@ -82,7 +91,7 @@ div.centered-form input {
     height: 100%; /* Full-height: remove this if you want "auto" height */
     width: 15%; /* Set the width of the sidebar */
     position: absolute; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
+    z-index: 0; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     margin-left:0;
@@ -96,6 +105,9 @@ div.centered-form input {
     color:#555;
     margin-top:0;
     top:0;
+}
+.grey{
+    color:rgb(179, 206, 255);
 }
 #chat-main
 {

@@ -16,10 +16,9 @@ function scrollToBottom() {
     var scrollHeight = messages.prop('scrollHeight'); 
     var newMessageHeight = newMessage.innerHeight();
 
-    console.log((clientHeight + scrollTop + newMessageHeight )+" vs "+scrollHeight)
+    //console.log((clientHeight + scrollTop + newMessageHeight )+" vs "+scrollHeight)
     if ((clientHeight + scrollTop + newMessageHeight +10) >= scrollHeight)
     {
-        console.log("should scroll")
         messages.scrollTop(scrollHeight);
     }
 };
@@ -27,11 +26,43 @@ function scrollToBottom() {
 /*****************************************
 * Handle the connect event
 *****************************************/
-socket.on('connect',function() {
+socket.on('connect', function() {
+
     console.log("connected to server");
-    
+
+    var params = $.deparam(window.location.search);
+    socket.emit('join', params, function (err) {
+        
+        if(err) {
+            alert(err);
+            window.location.href='/';
+        }
+        else {
+            console.log("Joined with no errors");
+            $('#room-name').html(params.room);
+        }
+
+    });
+
 });
 
+/*****************************************
+* Handle the disconnect event
+*****************************************/
+socket.on('disconnect',function() {
+    console.log("Disconnected from server")
+});
+
+socket.on('updateUserList', function(users) {
+
+    var ol = $('<ol></ol>');
+    users.forEach( function(user) {
+        ol.append($('<li></li>').text(user));
+    });
+
+    $('#users').html(ol);
+
+});
 /*****************************************
 * Event Acknowledgements
 *****************************************/
@@ -41,13 +72,6 @@ socket.on('connect',function() {
 // }, function() { //THis callback is the ack
 //     console.log("Got Ack!");
 // });
-
-/*****************************************
-* Handle the disconnect event
-*****************************************/
-socket.on('disconnect',function() {
-    console.log("Disconnected from server")
-});
 
 /*****************************************
 * handle the new message event
@@ -106,7 +130,7 @@ $('#message-form').on('submit', function(e) {
 
     var messageTextbox = $('[name=message]');
     socket.emit('createMessage', {
-        from: 'User',
+        from: 'user',
         text: messageTextbox.val()
     }, function() {
         //inside of acknowledgement, we clear the val after success
