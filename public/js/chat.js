@@ -129,8 +129,7 @@ $('#message-form').on('submit', function(e) {
     e.preventDefault();
 
     var messageTextbox = $('[name=message]');
-    socket.emit('createMessage', {
-        from: 'user',
+    socket.emit('createMessage', { //the name used to come from here but now the name comes from the server side
         text: messageTextbox.val()
     }, function() {
         //inside of acknowledgement, we clear the val after success
