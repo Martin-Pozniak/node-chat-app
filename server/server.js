@@ -10,14 +10,17 @@ const path=require('path');
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
+var moment = require('moment');
 
 const {generateMessage} = require('./utils/message');
 const {generateLocationMessage} = require('./utils/message');
+
 /************************************
  * Globals
  ***********************************/
 var publicPath = path.join(__dirname,'../public');
 const port = process.env.PORT || 3000;
+var date = moment();
 
 /********************************************************************************
  * Sets up 'app' as an express webserver

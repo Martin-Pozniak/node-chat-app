@@ -32,22 +32,28 @@ socket.on('disconnect',function() {
 * handle the new message event
 *****************************************/
 socket.on('newMessage', function(message) {
+    var formattedTime = moment(message.createdAt);
     console.log("Received New Message: ",message);
     var li = $('<li></li>');
+    var timestamp=$(`<span class='timestamp'>${formattedTime.format('h:m:s a')}</span>`)
     li.text(`${message.from}: ${message.text}`);
     $('#messages').append(li);
+    $('#messages').append(timestamp); 
 });
 
 /*****************************************
 * handle the new location message event
 *****************************************/
 socket.on('newLocationMessage', function(message) {
+    var formattedTime = moment(message.createdAt);    
     var li = $('<li></li>');
+    var timestamp=$(`<span class='timestamp'>${formattedTime.format('h:m:s a')}</span>`)    
     var a = $('<a target="_blank">My Current Location</a>');
     li.text(`${message.from}: `);
     a.attr('href',message.url);
     li.append(a);
-    $('#messages').append(li);    
+    $('#messages').append(li);  
+    $('#messages').append(timestamp);   
 });
 
 /*****************************************
@@ -73,11 +79,12 @@ var locButton = $('#send-location');
 locButton.on('click', function() {
 
     locButton.attr('disabled','disabled');
-
+    locButton.html('Sending Location...');
     if (!navigator.geolocation) return alert("No Geolocation Available!");
     
     navigator.geolocation.getCurrentPosition( function(position) {
         locButton.removeAttr('disabled');
+        locButton.html('Send Location');
         socket.emit('createLocationMessage', {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
@@ -85,5 +92,6 @@ locButton.on('click', function() {
     }, function() {
         alert("Unable To Fetch Location.");
         locButton.removeAttr('disabled');
+        locButton.html('Send Location');
     });
 });

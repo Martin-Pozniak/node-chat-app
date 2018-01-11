@@ -1,6 +1,5 @@
 html,body{
     height:100%;
-    background:red;
 }
 *
 {
@@ -46,6 +45,13 @@ input{
     background: linear-gradient(rgb(0, 67, 143),rgb(34, 34, 34)); /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     float:left;
+}
+.timestamp
+{
+    font-size:11px;
+    color:#555;
+    margin-top:0;
+    top:0;
 }
 #chat-main
 {
