@@ -55,11 +55,14 @@ socket.on('newLocationMessage', function(message) {
 *****************************************/
 $('#message-form').on('submit', function(e) {
     e.preventDefault();
+
+    var messageTextbox = $('[name=message]');
     socket.emit('createMessage', {
         from: 'User',
-        text: $('[name=message]').val()
+        text: messageTextbox.val()
     }, function() {
-
+        //inside of acknowledgement, we clear the val after success
+        messageTextbox.val('');
     });
 });
 
@@ -68,13 +71,19 @@ $('#message-form').on('submit', function(e) {
 *****************************************/
 var locButton = $('#send-location');
 locButton.on('click', function() {
+
+    locButton.attr('disabled','disabled');
+
     if (!navigator.geolocation) return alert("No Geolocation Available!");
+    
     navigator.geolocation.getCurrentPosition( function(position) {
+        locButton.removeAttr('disabled');
         socket.emit('createLocationMessage', {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
         });
     }, function() {
         alert("Unable To Fetch Location.");
+        locButton.removeAttr('disabled');
     });
 });
