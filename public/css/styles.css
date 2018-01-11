@@ -29,9 +29,37 @@ input{
     border:none;
     padding-left:10px;
 }
-
+div.centered-form label,input{
+ font-size:20px;
+}
+div.centered-form input {
+    height:40px;
+}
+.background {
+    background:linear-gradient(rgb(0, 67, 143),rgb(34, 34, 34));
+}
+.inner
+{
+    padding:20px;
+}
+.centered-form
+{
+    position:relative;
+    text-align:center;
+    width:20%;
+    left:40%;
+    height:40%;
+    top:20%;
+    background:#ddd;
+    border-radius:3px;
+    box-shadow:0 0 10px black;
+    min-width:200px;
+}
 .margin-top{
     margin-top: 10px;
+}
+.margin-top-large{
+    margin-top: 30px;
 }
 .margin-left{
     margin-left:10px;

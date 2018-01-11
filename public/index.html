@@ -2,47 +2,31 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <title>Join | ChatApp</title>
         <link rel="stylesheet" href="./css/styles.css"/>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ubuntu" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     </head>
-    <body>
-        <div id='people-container' class='left-bar'>
-            <h1 class='white bold left-aligned margin-top margin-left'>PEOPLE</h1>
-            <div id="Users"></div>
-        </div>
-        <div id="chat-main">
-            <div id="messages-container">
-                <ol id="messages">
-                    
-                </ol>
-            </div>
-            <div id="message-form-container">
-                <form id="message-form">            
-                    <input name="message" type="text" placeholder="Message" autofocus autocomplete="off"/>
-                    <button>Send</button>
-                    <button id="send-location" type = "button">Send Location</button>
+    <body class="background">
+        <div class="centered-form">
+            <div class="inner">
+                <form action="/chat.html">
+                    <div class="form-field">
+                        <h1>Join a Chat</h1>
+                    </div>
+                    <div class="form-field margin-top-large">
+                        <label>Display Name</label>
+                        <input type="text" name="name" autofocus>
+                    </div>
+                    <div class="form-field">
+                            <label>Room Name</label>
+                            <input type="text" name="room">
+                    </div>
+                    <div class="form-field margin-top-large">
+                        <button>Join</button>
+                    </div>
                 </form>
             </div>
         </div>
-
-        <script id="message-template" type="text/template">
-            <li>
-                <p><strong>{{from}}</strong> <span class='timestamp'>{{timestamp}}</span></p>
-                <p>{{text}}</p>
-            </li>
-        </script>
-
-        <script id="location-message-template" type="text/template">
-            <li>
-                <p><strong>{{from}}</strong> <span class='timestamp'>{{timestamp}}</span></p>
-                <p><a href="{{url}}" target="_blank">My Current Location</a></p>
-            </li>
-        </script>
-
-        <script src="/js/libs/moment/moment.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/libs/jquery-3.2.1.min.js"></script>     
-        <script src="/js/libs/mustache.js"></script>
-        <script src="/js/index.js"></script>  
     </body>
 </html>
